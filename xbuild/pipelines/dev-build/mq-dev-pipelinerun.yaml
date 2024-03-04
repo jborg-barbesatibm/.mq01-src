@@ -21,7 +21,7 @@ spec:
       secretName: mq01-git-credentials
   params:
   - name: source-repo-url
-    value: https://github.com/$GITORG/mq01-src.git
+    value: https://github.com/$GITORG/.mq01-src.git
   - name: revision
     value: "main"
   - name: dockerfile
