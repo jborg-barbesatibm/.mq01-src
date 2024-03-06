@@ -6,6 +6,9 @@ metadata:
   name: mq-event-listener
   namespace: mq01-ci
 spec:
+  description: |
+    Choose what pipeline to run by setting the template name.
+    Either mq-trigger-template or mq-externals-trigger-template
   serviceAccountName: pipeline
   triggers:
   - name: mq-trigger
@@ -18,4 +21,4 @@ spec:
     bindings:
       - ref: mq-trigger-binding
     template:
-      ref: mq-trigger-template
+      ref: mq-externals-trigger-template
