@@ -1,7 +1,7 @@
-apiVersion: tekton.dev/v1beta1
+terapiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: mq-dev-pipeline
+  name: mq-dev-externals-pipeline
   namespace: mq01-ci
 spec:
   description: |
