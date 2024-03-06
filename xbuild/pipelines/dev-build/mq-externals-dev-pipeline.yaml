@@ -1,4 +1,4 @@
-terapiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: mq-externals-dev-pipeline
@@ -15,6 +15,8 @@ spec:
   - name: dockerfile
     type: string
   - name: ops-repo-url
+    type: string
+  - name: image-reference
     type: string
   - name: tls-verify
     type: string
@@ -60,7 +62,7 @@ spec:
     - name: GIT_USER_EMAIL
       value: $(params.git-user-email)
   - name: gen-yamls
-    runAfter: ["clone-repo"]
+    runAfter: ["tag-repo"]
     taskRef:
       name: mq-gen-yamls
     workspaces:
@@ -68,7 +70,7 @@ spec:
       workspace: shared-data
     params:
      - name: IMAGE
-       value: $(tasks.tag-image.results.image-reference)
+       value: $(params.image-reference) 
   - name: test
     runAfter: ["gen-yamls"]
     taskRef:

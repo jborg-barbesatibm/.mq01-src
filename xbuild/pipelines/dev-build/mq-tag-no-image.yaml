@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: mq-tag
+  name: mq-tag-no-image
   namespace: mq01-ci
   annotations:
     description: Tags the git repository with the next version release value
@@ -42,6 +42,9 @@ spec:
         Secret to this Workspace over other volume types.
   results:
     - name: tag
+      type: string
+    - name: image-reference
+      type: string
   steps:
     - name: git-tag
       image: "$(params.gitInitImage)"
@@ -102,3 +105,5 @@ spec:
             exit 1
         fi
         echo -n "${NEW_TAG}" | tee $(results.tag.path)
+        echo -n "${NEW_IMAGE}" | tee $(results.image-reference.path)
+
