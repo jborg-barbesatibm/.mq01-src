@@ -14,7 +14,7 @@ spec:
           name: "cel"
         params:
         - name: "filter"
-          value: "header.match('X-GitHub-Event', 'push') && body.ref == 'refs/heads/main' && body.repository.full_name == '$GITORG/mq01-src'"
+          value: "header.match('X-GitHub-Event', 'push') && body.ref == 'refs/heads/main' && body.repository.full_name == 'jborg-barbesatibm/.mq01-src'"
     bindings:
       - ref: mq-trigger-binding
     template:

@@ -37,7 +37,7 @@ spec:
       - name: dockerfile
         value: $(workspaces.source.path)/repo/main/bin/Dockerfile
       - name: ops-repo-url
-        value: https://github.com/$GITORG/mq01-ops.git
+        value: https://github.com/jborg-barbesatibm/mq01-ops.git
       - name: image-reference
         value: image-registry.openshift-image-registry.svc:5000/mq01-ci/mq01
       - name: storage-driver
@@ -45,8 +45,8 @@ spec:
       - name: tls-verify
         value: "false"
       - name: git-user-name
-        value: "odowdaibm"
+        value: "jbarbes"
       - name: git-user-email
-        value: "a_o-dowd@uk.ibm.com"
+        value: "barbes@dk.ibm.com"
       pipelineRef:
         name: mq-dev-pipeline
