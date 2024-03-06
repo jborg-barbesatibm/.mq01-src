@@ -5,8 +5,8 @@ metadata:
   namespace: mq01-ci
 spec:
   description: |
-    This pipeline clones the Queue manager source repository builds an image,
-    pushes it to a registry, and runs a user script.
+    This pipeline clones the Queue manager source repository,
+    pushes it to an ops-repos.
   params:
   - name: revision
     type: string
@@ -15,8 +15,6 @@ spec:
   - name: dockerfile
     type: string
   - name: ops-repo-url
-    type: string
-  - name: image-reference
     type: string
   - name: tls-verify
     type: string
@@ -47,8 +45,22 @@ spec:
       value: repo/main
     - name: depth
       value: "0"
-  - name: gen-yamls
+  - name: tag-repo
     runAfter: ["clone-source"]
+    taskRef:
+      name: mq-tag-no-image
+    workspaces:
+    - name: source
+      workspace: shared-data
+    - name: basic-auth
+      workspace: git-creds
+    params:
+    - name: GIT_USER_NAME
+      value: $(params.git-user-name)
+    - name: GIT_USER_EMAIL
+      value: $(params.git-user-email)
+  - name: gen-yamls
+    runAfter: ["clone-repo"]
     taskRef:
       name: mq-gen-yamls
     workspaces:
