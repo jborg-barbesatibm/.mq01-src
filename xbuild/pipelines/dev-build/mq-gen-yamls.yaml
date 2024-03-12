@@ -38,6 +38,8 @@ spec:
         # Copy simple YAMLs from source
         cp config/yamls/mq01-qmgr.yaml yamls/.
         cp config/yamls/mq01-cert.yaml yamls/.
+        # JB: add the admin password secret:
+        cp config/yamls/mq01-admin-secret.yaml yamls/.
 
         # Update the Qmgr YAML with the tagged container image
         echo "New image name is:" ${IMAGE}
