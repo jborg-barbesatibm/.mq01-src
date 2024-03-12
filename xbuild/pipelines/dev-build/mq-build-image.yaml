@@ -1,4 +1,4 @@
-  apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   annotations:
@@ -69,7 +69,7 @@ spec:
         $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) \
         --digestfile /tmp/image-digest $(params.IMAGE) \
         docker://$(params.IMAGE)
-        
+
       cat /tmp/image-digest | tee $(results.IMAGE_DIGEST.path)
       echo "$(params.IMAGE)" | tee $(results.IMAGE_URL.path)
     securityContext:
