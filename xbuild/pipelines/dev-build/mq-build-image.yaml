@@ -55,7 +55,7 @@ spec:
   - image: $(params.BUILDER_IMAGE)
     name: build
     script: |
-      echo "In mq-build-image.yaml - building the following Docker file:"
+      echo "In mq-build-image.yaml - building the following Docker file: $(params.DOCKERFILE)"
       cat $(params.DOCKERFILE)
 
       [[ "$(workspaces.sslcertdir.bound)" == "true" ]] && CERT_DIR_FLAG="--cert-dir $(workspaces.sslcertdir.path)"
