@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1beta1
+  apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   annotations:
@@ -55,6 +55,9 @@ spec:
   - image: $(params.BUILDER_IMAGE)
     name: build
     script: |
+      echo "In mq-build-image.yaml - building the following Docker file:"
+      cat $(params.DOCKERFILE)
+
       [[ "$(workspaces.sslcertdir.bound)" == "true" ]] && CERT_DIR_FLAG="--cert-dir $(workspaces.sslcertdir.path)"
       buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) bud \
         $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT) \
@@ -66,6 +69,7 @@ spec:
         $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) \
         --digestfile /tmp/image-digest $(params.IMAGE) \
         docker://$(params.IMAGE)
+        
       cat /tmp/image-digest | tee $(results.IMAGE_DIGEST.path)
       echo "$(params.IMAGE)" | tee $(results.IMAGE_URL.path)
     securityContext:
