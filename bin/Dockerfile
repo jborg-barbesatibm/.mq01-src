@@ -11,7 +11,7 @@ USER 0
 RUN cat /etc/os-release
 RUN cat /etc/issue
 
-rpm -qa
+RUN rpm -qa
 
 # Add some tools to ensure a new version of the image is created:
 # RUN apt-get update && apt-get upgrade -y

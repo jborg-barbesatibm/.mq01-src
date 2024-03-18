@@ -23,7 +23,7 @@ spec:
   - name: source-repo-url
     value: https://github.com/jborg-barbesatibm/.mq01-src.git
   - name: revision
-    value: "95f7252cbe695b10342abb6e753b9a7c845c3526"
+    value: "259ebd7cd57d4a466a1bc2ab56e49d884ae7dadc"
   - name: dockerfile
     value: $(workspaces.source.path)/repo/main/bin/Dockerfile
   - name: ops-repo-url
