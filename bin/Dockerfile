@@ -6,8 +6,16 @@ FROM icr.io/ibm-messaging/mq:latest
 
 USER 0
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install libssl-dev
+RUN uname
+
+RUN cat /etc/os-release
+
+RUN cat /etc/issue
+
+
+# RUN apt-get update && apt-get upgrade -y
+# RUN apt-get install libssl-dev
+RUN apk-get update && apk-get upgrade -y
 
 
 RUN microdnf upgrade && microdnf --disableplugin=subscription-manager install lsof bc ca-certificates file findutils gawk util-linux which
