@@ -55,7 +55,7 @@ spec:
   - image: $(params.BUILDER_IMAGE)
     name: build
     script: |
-      echo "In mq-build-image.yaml - building the following Docker file with trace: $(params.DOCKERFILE) :"
+      echo "In mq-build-image.yaml - building the following Docker file: $(params.DOCKERFILE) :"
       ls -l $(params.DOCKERFILE)
 
       echo " 3 times ls -l"
@@ -64,14 +64,22 @@ spec:
       ls -l /workspace/source/repo/main/bin
 
       [[ "$(workspaces.sslcertdir.bound)" == "true" ]] && CERT_DIR_FLAG="--cert-dir $(workspaces.sslcertdir.path)"
+      echo "cert-dir-bound build bud: buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER)  bud \
+        $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT) \
+        --tls-verify=$(params.TLSVERIFY) --no-cache \
+        -f $(params.DOCKERFILE) -t $(params.IMAGE) $(params.CONTEXT) "
       buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) bud \
-        $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT)  --log-level trace \
+        $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT)  \
         --tls-verify=$(params.TLSVERIFY) --no-cache \
         -f $(params.DOCKERFILE) -t $(params.IMAGE) $(params.CONTEXT)
       [[ "$(params.SKIP_PUSH)" == "true" ]] && echo "Push skipped" && exit 0
       [[ "$(workspaces.dockerconfig.bound)" == "true" ]] && export DOCKER_CONFIG="$(workspaces.dockerconfig.path)"
+      echo "dockerconfig-bound build push: buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER)  push \
+        $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) \
+        --digestfile /tmp/image-digest $(params.IMAGE) \
+        docker://$(params.IMAGE) "
       buildah ${CERT_DIR_FLAG} --storage-driver=$(params.STORAGE_DRIVER) push \
-        $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) --log-level trace \
+        $(params.PUSH_EXTRA_ARGS) --tls-verify=$(params.TLSVERIFY) \
         --digestfile /tmp/image-digest $(params.IMAGE) \
         docker://$(params.IMAGE) 
 
