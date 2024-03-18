@@ -11,6 +11,7 @@ USER 0
 RUN cat /etc/os-release
 RUN cat /etc/issue
 
+rpm -qa
 
 # Add some tools to ensure a new version of the image is created:
 # RUN apt-get update && apt-get upgrade -y
@@ -18,7 +19,17 @@ RUN cat /etc/issue
 #                     openssl-devel.
 # RUN apk-get update && apk-get upgrade -y
 
-RUN dnf upgrade && dnf --disableplugin=subscription-manager install openssl-devel
+RUN microdnf upgrade \
+  --refresh \
+  --best \
+  --nodocs \
+  --noplugins \
+  --setopt=install_weak_deps=0
+
+RUN microdnf --disableplugin=subscription-manager install openssl-devel
+RUN microdnf --disableplugin=subscription-manager clean all
+
+# RUN dnf upgrade && dnf --disableplugin=subscription-manager install openssl-devel
 
 # RUN microdnf upgrade && microdnf --disableplugin=subscription-manager install lsof bc ca-certificates file findutils gawk util-linux which
 # RUN microdnf --disableplugin=subscription-manager clean all
