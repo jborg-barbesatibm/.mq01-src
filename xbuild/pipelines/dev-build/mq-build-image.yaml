@@ -56,9 +56,9 @@ spec:
     name: build
     script: |
       echo "In mq-build-image.yaml - building the following Docker file: $(params.DOCKERFILE) :"
-      ls -l $(params.DOCKERFILE)
+      cat $(params.DOCKERFILE)
 
-      echo " 3 times ls -l"
+      echo "3 times ls -l"
       ls -l /workspace/source/repo/main
       ls -l /workspace/source/repo/main/xbuild/pipelines/dev-build
       ls -l /workspace/source/repo/main/bin
