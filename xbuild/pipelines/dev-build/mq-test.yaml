@@ -20,3 +20,6 @@ spec:
         # List YAMLs for each Queue manager service.
         cd config/yamls
         ls -alt *.yaml
+
+        cat mq01-cert.yaml
+        
